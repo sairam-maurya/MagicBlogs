@@ -1,0 +1,8 @@
+.signup-bg{
+  background-image: linear-gradient(to right,#d1d8e2, #8697b1 );
+  min-height: 100vh;
+}
+.mask-custom {
+  backdrop-filter: blur(4px);
+  background-color: rgba(162, 187, 236, 0.25) !important;
+}
