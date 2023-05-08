@@ -68,8 +68,8 @@ const Signup = () => {
     validationSchema: SignupSchema
   });
   return (<div>
-    <section className="vh-100" >
-      <div className="col-md-10 mx-auto h-100">
+    <section className="vh-100" style={{backgroundColor:"rgb(247,243,247)"}}>
+      <div className="col-md-10 mx-auto py-5 h-100">
         <div className="card text-black" style={{ borderRadius: 25 }}>
           <div className="card-body p-md-5">
             <div className="row justify-content-center">
