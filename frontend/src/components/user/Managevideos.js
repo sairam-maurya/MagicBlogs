@@ -1,12 +1,30 @@
 import React, { useState } from 'react'
 import Swal from 'sweetalert2';
 import app_config from '../../config';
+import './Managevideo.css';
 
 const Managevideos = () => {
 
   const [currentUser, setCurrentUser] = useState(JSON.parse(sessionStorage.getItem('user')));
 
   const { apiUrl } = app_config;
+
+  const getDataFromBackend = async () => {
+    setLoading(true);
+    const response = await fetch(url + "/video/getbyuserid/" + currentUser._id);
+    console.log(response.status);
+    if (response.status === 200) {
+      const data = await response.json();
+      setUserArray(data);
+      console.log(data);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getDataFromBackend();
+  }, []);
+
 
   const convertVideotoBlog = async (id, index) => {
     setSelBlog(index);
@@ -171,74 +189,8 @@ const Managevideos = () => {
         </div>
       </div>
 
-      <div className='container'>
-        <div className="row row-cols-1 row-cols-md-3 g-4">
-          <div className="col">
-            <div className="card">
-              <img
-                src="https://mdbcdn.b-cdn.net/img/new/standard/city/041.webp"
-                className="card-img-top"
-                alt="Hollywood Sign on The Hill"
-              />
-              <div className="card-body">
-                <h5 className="card-title">Card title</h5>
-                <p className="card-text">
-                  This is a longer card with supporting text below as a natural lead-in
-                  to additional content. This content is a little bit longer.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="col">
-            <div className="card">
-              <img
-                src="https://mdbcdn.b-cdn.net/img/new/standard/city/042.webp"
-                className="card-img-top"
-                alt="Palm Springs Road"
-              />
-              <div className="card-body">
-                <h5 className="card-title">Card title</h5>
-                <p className="card-text">
-                  This is a longer card with supporting text below as a natural lead-in
-                  to additional content. This content is a little bit longer.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="col">
-            <div className="card">
-              <img
-                src="https://mdbcdn.b-cdn.net/img/new/standard/city/043.webp"
-                className="card-img-top"
-                alt="Los Angeles Skyscrapers"
-              />
-              <div className="card-body">
-                <h5 className="card-title">Card title</h5>
-                <p className="card-text">
-                  This is a longer card with supporting text below as a natural lead-in
-                  to additional content.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="col">
-            <div className="card">
-              <img
-                src="https://mdbcdn.b-cdn.net/img/new/standard/city/044.webp"
-                className="card-img-top"
-                alt="Skyscrapers"
-              />
-              <div className="card-body">
-                <h5 className="card-title">Card title</h5>
-                <p className="card-text">
-                  This is a longer card with supporting text below as a natural lead-in
-                  to additional content. This content is a little bit longer.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
+      <div className="container">
+        {displayVideo()}
       </div>
 
 
