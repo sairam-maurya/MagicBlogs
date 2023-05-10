@@ -1,0 +1,31 @@
+.videoheader{
+    /* background-image:url("../main/photo/Video.png"); */
+    height:60vh;
+    background-size:cover;
+    background-position:center; 
+    background-repeat:no-repeat;
+    background-blend-mode: darken;
+    background-color: rgba(0,0,0,0.5);
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+.heading{
+    padding: 5%;
+    letter-spacing: 5px;
+}
+.bg-image{
+    /* height:15rem;
+    width: 100%; */
+}
+.bg-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.thumb-small{
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+}
