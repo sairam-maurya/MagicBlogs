@@ -8,6 +8,59 @@ import { Navigate } from 'react-router-dom';
 
 
 const AddBlog = () => {
+
+  const {id} = useParams();
+  const url = app_config.backend_url;
+  const [videoData, setVideoData] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [fieldValues, setfieldValues] = useState("")
+  const [currentUser, setCurrentUser] = useState(
+    JSON.parse(sessionStorage.getItem("user"))
+  );
+  const [selBlog, setSelBlog] = useState("");
+  const [blogData, setBlogData] = useState('');
+  const navigate = useNavigate();
+
+  const getDatafromBackend = async () => {
+    setLoading(true);
+    const response = await fetch(url + "/video/getbyid/" + id);
+    // console.log(response.status);
+    if( response.status === 200){
+    const data = await response.json();
+    console.log(data);
+    setBlogData(data.transcription)
+    setVideoData(data);
+    setfieldValues({
+      title: data.title,
+      description: data.description,
+      text:data.transcription.text,
+      category:"",
+      createdAt:new Date(),
+    })
+    setLoading(false);
+  }
+};
+
+const uploadBlog = (e) => {
+  const file = e.target.files[0];
+  setSelBlog(file.name);
+  const fd = new FormData();
+  fd.append("myfile", file);
+  fetch("http://localhost:5000/util/uploadfile", {
+    method: "POST",
+    body: fd,
+  }).then((res) => {
+    if (res.status === 200) {
+      toast.success("Image uploaded successfully");
+      console.log("uploaded");
+    }
+  });
+};
+
+useEffect(() => {
+  getDatafromBackend()
+}, [])
+
   const [UserList, setUserList] = useState([]);
   const [value, setValue] = useState('');
 
