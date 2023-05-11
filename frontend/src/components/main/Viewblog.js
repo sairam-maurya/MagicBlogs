@@ -7,15 +7,15 @@ import MarkdownPreview from '@uiw/react-markdown-preview';
 const Viewblog = () => {
   const { id } = useParams();
   console.log(id);
-  const url = app_config.backend_url;
+  const url = app_config.apiUrl;
   const [loading, setLoading] = useState(false);
   const [blogData, setBlogData] = useState("")
 
-  const getDatafromBackend=async ()=>{
+  const getDatafromBackend = async () => {
     setLoading(true);
-    const response=await fetch(url+"/blog/getbyid/"+id);
-    if(response.status===200){
-      const data=await response.json();
+    const response = await fetch(url + "/blog/getbyid/" + id);
+    if (response.status === 200) {
+      const data = await response.json();
       setBlogData(data);
       console.log(data);
       setLoading(false);
@@ -25,27 +25,27 @@ const Viewblog = () => {
   useEffect(() => {
     getDatafromBackend();
   }, [])
-  
-  const displayBlog=()=>{
-    if(!loading)
-    return(
-      <div className='container mt-5'>
-        <div className='card'>
-          <div className="card-header">
-            <div className='col-4'>
-          <img src={url+"/"+blogData.image} alt="blog" className='img-fluid rounded-5 '/>
+
+  const displayBlog = () => {
+    if (!loading)
+      return (
+        <div className='container mt-5'>
+          <div className='card'>
+            <div className="card-header">
+              <div className='col-4'>
+                <img src={url + "/" + blogData.image} alt="blog" className='img-fluid rounded-5 ' />
               </div>
-          <h1 className='my-2'>{blogData.title}</h1>
-          <p>{blogData.description}</p>
-          </div>
-          <div className="card-body">
-          <p>{blogData.text}</p>
-          <p>{blogData.category}</p>
-          <MarkdownPreview source={blogData.data} />
+              <h1 className='my-2'>{blogData.title}</h1>
+              <p>{blogData.description}</p>
+            </div>
+            <div className="card-body">
+              <p>{blogData.text}</p>
+              <p>{blogData.category}</p>
+              <MarkdownPreview source={blogData.data} />
+            </div>
           </div>
         </div>
-      </div>
-    )
+      )
   }
 
   return (

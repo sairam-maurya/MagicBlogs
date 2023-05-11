@@ -114,6 +114,7 @@ const AddBlog = () => {
           title: 'Nice',
           text: 'User Registered sucessfully'
         });
+        navigate('/main/browseblog');
 
       } else {
         Swal.fire({
@@ -145,7 +146,7 @@ const AddBlog = () => {
               <label htmlFor="category">Description</label>
               <input className='form-control' id="description" onChange={blogForm.handleChange} value={blogForm.values.description} />
               <label htmlFor="cover">upload Cover-img</label>
-              <input hidden  id="cover" onChange={uploadBlog}/>
+              <input hidden id="cover" onChange={uploadBlog} />
 
 
 

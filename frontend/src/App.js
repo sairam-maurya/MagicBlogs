@@ -31,7 +31,7 @@ function App() {
               <Route path="Signup" element={<Signup />} />
               <Route path="navbar" element={<Navbar />} />
               <Route path="browseblog" element={<BrowseBlog />} />
-              <Route path="viewblog" element={<Viewblog />} />
+              <Route path="viewblog/:id" element={<Viewblog />} />
 
             </Route>
             <Route path="user" element={<UserAuth><User /> </UserAuth>}>

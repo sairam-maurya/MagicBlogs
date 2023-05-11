@@ -3,13 +3,12 @@ import { NavLink } from "react-router-dom";
 import app_config from "../../config";
 
 function BrowseBlog() {
-  const url = app_config.backend_url;
+  const url = app_config.apiUrl;
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const url = app_config.backend_url;
     fetch(url + "/blog/getall")
       .then((response) => {
         if (response.ok) {
@@ -55,7 +54,7 @@ function BrowseBlog() {
                   <h6 className="card-title mb-3">{blog.user.username}</h6>
                   {/* <p>Category</p> */}
                   <NavLink
-                    to={"/blog/viewblog/" + blog._id}
+                    to={"/main/viewblog/" + blog._id}
                     className="btn btn-primary w-100"
                   >
                     {" "}
