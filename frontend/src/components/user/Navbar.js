@@ -1,6 +1,31 @@
 import React from 'react'
+import useUserContext from '../../context/UserContext';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
+
+  const { logout, loggedIn } = useUserContext();
+
+  const showLoggedIn = () => {
+    if (loggedIn) return (
+      <li className="nav-item">
+        <button className="btn btn-danger" onClick={logout}>
+          Logout
+        </button>
+      </li>)
+    else {
+      return (
+        <>
+          <li className="nav-item">
+            <Link className="nav-link" to="/main/login">
+              Login
+            </Link>
+          </li>
+
+        </>
+      )
+    }
+  }
   return (
     <div>
       <>
@@ -49,6 +74,9 @@ const Navbar = () => {
                     Managevideos
             </a>
                 </li>
+              </ul>
+              <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+                {showLoggedIn()}
               </ul>
               {/* Left links */}
               

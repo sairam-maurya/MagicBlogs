@@ -14,11 +14,13 @@ import AddBlog from './components/user/AddBlog';
 import ManageBlog from './components/user/ManageBlog';
 import Managevideos from './components/user/Managevideos';
 import UserAuth from './auth/UserAuth';
+import { UserProvider } from './context/UserContext';
 
 function App() {
   return (
     <div >
       <BrowserRouter>
+      <UserProvider>
       <Routes>
         <Route path='/' element={<Navigate to ='/home'/>}/>
         <Route path="main" element={<Main/>}>
@@ -38,6 +40,7 @@ function App() {
 
         </Route>
       </Routes>
+      </UserProvider>
       </BrowserRouter>
     </div>
   );

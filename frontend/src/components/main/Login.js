@@ -3,9 +3,13 @@ import { useFormik } from 'formik';
 // import { useFormik } from 'formik';
 // import React from 'react'
 import Swal from 'sweetalert2';
+import useUserContext from '../../context/UserContext';
 
 
 const Login = () => {
+
+    const { setLoggedIn } = useUserContext();
+
     const loginForm = useFormik({
         initialValues: {
             email: '',
@@ -28,6 +32,7 @@ const Login = () => {
                     title: 'Success',
                     text: 'LOgin in sucessfull'
                 })
+                setLoggedIn(true);
 
                 const data = await res.json();
 

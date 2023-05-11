@@ -1,78 +1,102 @@
-import React from 'react'
+import React from 'react';
+import useUserContext from '../../context/UserContext';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
-  return (
-    <div><>
-  {/* Navbar */}
-  <nav className="navbar navbar-expand-lg navbar-light bg-light">
-    {/* Container wrapper */}
-    <div className="container">
-      {/* Navbar brand */}
-      <a className="navbar-brand me-2 p-0" href="">
-        <img
-          src="/log.png"
-          height={30}
-          alt="magic blog"
-          loading="lazy"
-          style={{ marginTop: "-1px" }}
-        />
-      </a>
-      {/* Toggle button */}
-      <button
-        className="navbar-toggler"
-        type="button"
-        data-mdb-toggle="collapse"
-        data-mdb-target="#navbarButtonsExample"
-        aria-controls="navbarButtonsExample"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <i className="fas fa-bars" />
-      </button>
-      {/* Collapsible wrapper */}
-      <div className="collapse navbar-collapse" id="navbarButtonsExample">
-        {/* Left links */}
-        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-          <li className="nav-item">
-            <a className="nav-link" href="#">
-              Home
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="#">
-              BrowseBlog
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="#">
-              Viewblog
-            </a>
-          </li>
-        </ul>
-        {/* Left links */}
+
+  const { logout, loggedIn } = useUserContext();
+
+  const showLoggedIn = () => {
+    if (loggedIn) return (
+      <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li className="nav-item">
+          <button className="btn btn-danger" onClick={logout}>
+            Logout
+          </button>
+        </li>
+      </ul>)
+    else {
+      return (
         <div className="d-flex align-items-center">
           <button type="button" className="btn btn-link px-3 me-2">
             <a href="/main/Login">
 
-            Login
+              Login
             </a>
           </button>
-            <a href="/main/Signup">
-          <button type="button" className="btn btn-primary me-3">
 
-            Sign up for free
-          </button>
-            </a>
-         
+          <a href="/main/Signup">
+            <button type="button" className="btn btn-primary me-3">
+
+              Sign up for free
+            </button>
+          </a>
+
         </div>
-      </div>
-      {/* Collapsible wrapper */}
+      )
+    }
+  }
+
+  return (
+    <div><>
+      {/* Navbar */}
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        {/* Container wrapper */}
+        <div className="container">
+          {/* Navbar brand */}
+          <a className="navbar-brand me-2 p-0" href="">
+            <img
+              src="/log.png"
+              height={30}
+              alt="magic blog"
+              loading="lazy"
+              style={{ marginTop: "-1px" }}
+            />
+          </a>
+          {/* Toggle button */}
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-mdb-toggle="collapse"
+            data-mdb-target="#navbarButtonsExample"
+            aria-controls="navbarButtonsExample"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <i className="fas fa-bars" />
+          </button>
+          {/* Collapsible wrapper */}
+          <div className="collapse navbar-collapse" id="navbarButtonsExample">
+            {/* Left links */}
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+              <li className="nav-item">
+                <a className="nav-link" href="#">
+                  Home
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="#">
+                  BrowseBlog
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="#">
+                  Viewblog
+                </a>
+              </li>
+            </ul>
+
+            {showLoggedIn()}
+
+
+          </div>
+          {/* Collapsible wrapper */}
+        </div>
+        {/* Container wrapper */}
+      </nav>
+      {/* Navbar */}
+    </>
     </div>
-    {/* Container wrapper */}
-  </nav>
-  {/* Navbar */}
-</>
-</div>
   )
 }
 
