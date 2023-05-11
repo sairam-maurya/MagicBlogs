@@ -13,6 +13,7 @@ import Viewblog from './components/main/Viewblog';
 import AddBlog from './components/user/AddBlog';
 import ManageBlog from './components/user/ManageBlog';
 import Managevideos from './components/user/Managevideos';
+import UserAuth from './auth/UserAuth';
 
 function App() {
   return (
@@ -29,7 +30,7 @@ function App() {
           <Route path="viewblog" element={<Viewblog/>}/>
 
         </Route>
-        <Route path="user" element={<User />}>
+        <Route path="user" element={ <UserAuth><User /> </UserAuth>}>
           <Route path="addblog" element={<AddBlog />}/>
           <Route path="manageblog" element={<ManageBlog/>}/>
           <Route path="managevideos" element={<Managevideos/>}/>
@@ -38,7 +39,6 @@ function App() {
         </Route>
       </Routes>
       </BrowserRouter>
-     
     </div>
   );
 }
