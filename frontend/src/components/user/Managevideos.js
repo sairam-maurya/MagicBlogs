@@ -63,7 +63,7 @@ const Managevideos = () => {
       console.log(data);
       // getDataFromBackend();
 
-      navigate("/blog/addblog/" + id);
+      navigate("/user/addblog/" + id);
       // setBlogLoading(false);
     } else if (response.status === 400) {
       toast.error("Video is not transcribed yet");

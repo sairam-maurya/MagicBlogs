@@ -17,19 +17,6 @@ router.post('/add',(req,res)=>{
     
 });
 
-router.post('/authenticate',(req,res)=>{
-    Model.findOne(req.body)
-    .then((result) => {
-        if(result) res.json(result);
-        else res.status(401).json({message:'Invalid credentials'})
-
-        
-    }).catch((err) => {
-        console.error(err);
-        res.status(500).json(err);
-        
-    });
-});
 router.get('/getall',(req,res)=> {
     Model.find({})
     .then((result) => {
@@ -42,6 +29,43 @@ router.get('/getall',(req,res)=> {
     });
 
 });
+
+router.get('/getbyid/:id', (req, res) => {
+    Model.findById(req.params.id)
+        .then((result) => {
+            res.json(result);
+
+        }).catch((err) => {
+            console.error(err);
+            res.status(500).json(err);
+
+        });
+});
+
+router.delete('/deletebyid/:id', (req, res) => {
+    Model.findByIdAndDelete(req.params.id)
+        .then((result) => {
+            res.json(result);
+
+        }).catch((err) => {
+            console.error(err);
+            res.status(500).json(err);
+
+        });
+});
+
+router.get('/getbyuserid/:id', (req, res) => {
+    Model.find({ user: req.params.id })
+        .then((result) => {
+            res.json(result);
+
+        }).catch((err) => {
+            console.error(err);
+            res.status(500).json(err);
+
+        });
+});
+
 
 
 module.exports=router;
