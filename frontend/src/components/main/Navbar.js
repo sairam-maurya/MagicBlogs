@@ -8,11 +8,11 @@ const Navbar = () => {
     {/* Container wrapper */}
     <div className="container">
       {/* Navbar brand */}
-      <a className="navbar-brand me-2" href="https://mdbgo.com/">
+      <a className="navbar-brand me-2 p-0" href="">
         <img
-          src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp"
-          height={16}
-          alt="MDB Logo"
+          src="/log.png"
+          height={30}
+          alt="magic blog"
           loading="lazy"
           style={{ marginTop: "-1px" }}
         />

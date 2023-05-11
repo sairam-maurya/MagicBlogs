@@ -30,7 +30,7 @@ function App() {
 
         </Route>
         <Route path="user" element={<User />}>
-          <Route path="addblogs" element={<AddBlog />}/>
+          <Route path="addblog" element={<AddBlog />}/>
           <Route path="manageblog" element={<ManageBlog/>}/>
           <Route path="managevideos" element={<Managevideos/>}/>
           <Route path="navbar" element={<Navbar/>}/>

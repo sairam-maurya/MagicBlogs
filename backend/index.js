@@ -1,8 +1,11 @@
 const express = require( 'express');
 const app = express();
 const port = 5000;
-const userRouter = require('./routers/userRouter');
 
+const userRouter = require('./routers/userRouter');
+const videoRouter = require('./routers/videoRouter');
+const utilRouter = require('./routers/util');
+const blogRouter = require('./routers/blogRouter');
 
 const cors=require('cors');
 app.use(cors({
@@ -11,10 +14,13 @@ app.use(cors({
 }));
 app.use(express.json());
 // middleware
+
 app.use('/user',userRouter);
+app.use('/video',videoRouter);
+app.use('/util',utilRouter);
+app.use('/blog',blogRouter)
 
-
-app.get('/',(req,res)=>{
+app.get('/',(req,res) =>{
     res.send('Working Perfectly')
 });
 

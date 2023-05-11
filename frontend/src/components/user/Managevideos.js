@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import Swal from 'sweetalert2';
+import app_config from '../../config';
 
 const Managevideos = () => {
 
-  // const [currentUser]
+  const [currentUser, setCurrentUser] = useState(JSON.parse(sessionStorage.getItem('user')));
+
+  const { apiUrl } = app_config;
 
   const saveVideo = async (file) => {
     const res = await fetch('http://localhost:5000/user/add', {
@@ -11,11 +14,10 @@ const Managevideos = () => {
       body: JSON.stringify({
         filename: file.name,
         name: file.name,
-        // user: ,
-        createdAt: Date,
-        
-      }),                     //by default it is get but here we  are   chning to post ..
-      //to know abut get and post see in ppt
+        user: currentUser._id,
+        createdAt: new Date(),
+
+      }),
       headers: {
         'Content-Type': 'application/json'
       }
@@ -39,11 +41,33 @@ const Managevideos = () => {
       });
     }
   }
+  const uploadVideo = async (e) => {
+    const file = e.target.files[0];
+    const fd = new FormData();
+    fd.append('myfile', file);
+    const res = await fetch(apiUrl + '/util/uploadfile', {
+      method: 'POST',
+      body: fd
+    });
+    if (res.status === 200) {
+      console.log('file uploaded');
+      saveVideo(file);
+    }
+  }
+
+  
 
   return (
     <div>
-      <h2>Manage Blog</h2>
-      <hr/>
+      <h2>Manage Videos</h2>
+      <hr />
+
+      <div className='card'>
+        <div className="card-body">
+          <input type='file' onChange={uploadVideo} />
+        </div>
+      </div>
+
       <div className='container'>
         <div className="row row-cols-1 row-cols-md-3 g-4">
           <div className="col">
@@ -58,7 +82,7 @@ const Managevideos = () => {
                 <p className="card-text">
                   This is a longer card with supporting text below as a natural lead-in
                   to additional content. This content is a little bit longer.
-        </p>
+                </p>
               </div>
             </div>
           </div>
@@ -74,7 +98,7 @@ const Managevideos = () => {
                 <p className="card-text">
                   This is a longer card with supporting text below as a natural lead-in
                   to additional content. This content is a little bit longer.
-        </p>
+                </p>
               </div>
             </div>
           </div>
@@ -90,7 +114,7 @@ const Managevideos = () => {
                 <p className="card-text">
                   This is a longer card with supporting text below as a natural lead-in
                   to additional content.
-        </p>
+                </p>
               </div>
             </div>
           </div>
@@ -106,14 +130,14 @@ const Managevideos = () => {
                 <p className="card-text">
                   This is a longer card with supporting text below as a natural lead-in
                   to additional content. This content is a little bit longer.
-        </p>
+                </p>
               </div>
             </div>
           </div>
         </div>
 
       </div>
-     
+
 
     </div>
   )
