@@ -43,5 +43,41 @@ router.get('/getall', (req, res) => {
 
 });
 
+router.get('/getbyid/:id', (req, res) => {
+    Model.findById(req.params.id)
+        .then((result) => {
+            res.json(result);
+
+        }).catch((err) => {
+            console.error(err);
+            res.status(500).json(err);
+
+        });
+});
+
+router.delete('/deletebyid/:id', (req, res) => {
+    Model.findByIdAndDelete(req.params.id)
+        .then((result) => {
+            res.json(result);
+
+        }).catch((err) => {
+            console.error(err);
+            res.status(500).json(err);
+
+        });
+});
+
+router.get('/getbyuserid/:id', (req, res) => {
+    Model.find({ user: req.params.id })
+        .then((result) => {
+            res.json(result);
+
+        }).catch((err) => {
+            console.error(err);
+            res.status(500).json(err);
+
+        });
+});
+
 
 module.exports = router;

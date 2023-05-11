@@ -47,10 +47,10 @@ router.get("/transcribe/:videoid", (req, res) => {
         // console.log('trascript doesnt exists');
         console.log("transcribing " + data.file + " ...");
         const audioSource = {
-          stream: fs.createReadStream("./static/uploads/" + data.file),
+          stream: fs.createReadStream("./static/uploads/" + data.filename),
           mimetype: "video/mp4",
         };
-        
+
         transcriber(audioSource, ({ transcript, confidence, words }) => {
           videoModel
             .findByIdAndUpdate(

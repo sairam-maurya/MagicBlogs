@@ -1,13 +1,27 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2';
 import app_config from '../../config';
-import './Managevideo.css';
+import './Managevideos.css';
+import { toast } from 'react-hot-toast';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Managevideos = () => {
 
   const [currentUser, setCurrentUser] = useState(JSON.parse(sessionStorage.getItem('user')));
 
+  const [loading, setLoading] = useState(false);
+
+  const url = app_config.apiUrl;
+
+  const [selBlog, setSelBlog] = useState(null);
+
   const { apiUrl } = app_config;
+
+  const [videoList, setVideoList] = useState([]);
+
+  const navigate = useNavigate();
+
+  const [blogLoading, setBlogLoading] = useState(false);
 
   const getDataFromBackend = async () => {
     setLoading(true);
@@ -15,7 +29,7 @@ const Managevideos = () => {
     console.log(response.status);
     if (response.status === 200) {
       const data = await response.json();
-      setUserArray(data);
+      setVideoList(data);
       console.log(data);
       setLoading(false);
     }
@@ -48,7 +62,7 @@ const Managevideos = () => {
       const data = await response.json();
       console.log(data);
       // getDataFromBackend();
-      
+
       navigate("/blog/addblog/" + id);
       // setBlogLoading(false);
     } else if (response.status === 400) {
@@ -77,46 +91,46 @@ const Managevideos = () => {
 
   const displayVideo = () => {
     if (!loading) {
-      return userArray.map(({ _id, title, description, file, thumbnail }, index) => (
+      return videoList.map(({ _id, filename, description, file, thumbnail }, index) => (
         <div className="col-md-3 mt-4" key={_id}>
-            <div
-              className="thumb-small"
-              style={{ backgroundImage: `url('${thumbnail ?url + "/" + thumbnail: 'video-placeholder.webp'}')` }}
-            >
-              <div className="p-3 thumb-options">
-                {/* <h5 className="card-title">{title}</h5>
+          <div
+            className="thumb-small"
+            style={{ backgroundImage: `url('https://d2uolguxr56s4e.cloudfront.net/img/kartrapages/video_player_placeholder.gif')` }}
+          >
+            <div className="p-3 thumb-options">
+              {/* <h5 className="card-title">{filename}</h5>
               <p className="text-muted">{description}</p> */}
-                <Link to={"/user/viewvideo/" + _id}>
-                  <button className="btn btn-primary btn-floating">
-                    <i class="fas fa-eye "></i>
-                  </button>
-                </Link>
-                &nbsp;&nbsp;&nbsp;
-                <button
-                  className="btn btn-danger btn-floating"
-                  onClick={(e) => deleteVideo(_id)}
-                >
-                  <i class="fas fa-trash"></i>
+              <Link to={"/user/viewvideo/" + _id}>
+                <button className="btn btn-primary btn-floating">
+                  <i class="fas fa-eye "></i>
                 </button>
-                &nbsp;&nbsp;&nbsp;
-                {!blogLoading ? (
-                  <button
-                    className={"btn btn-secondary "+(selBlog===index?'btn-rounded':'btn-floating')}
-                    onClick={(e) => convertVideotoBlog(_id, index)}
-                  ><i className={"fa-solid fa-gear "+(selBlog===index?'fa-spin':'')}></i>
-                    {selBlog===index?' Converting ...':'' }
-                  </button>
-                ) : (
-                  <button className="btn btn-success" disabled>
-                    Converting...
-                  </button>
-                )}
-              </div>
-
-              <p className="h3 text-muted ms-3">{title}</p>
-              <p className="h6 text-muted ms-3">{file}</p>
+              </Link>
+              &nbsp;&nbsp;&nbsp;
+              <button
+                className="btn btn-danger btn-floating"
+                onClick={(e) => deleteVideo(_id)}
+              >
+                <i class="fas fa-trash"></i>
+              </button>
+              &nbsp;&nbsp;&nbsp;
+              {!blogLoading ? (
+                <button
+                  className={"btn btn-secondary " + (selBlog === index ? 'btn-rounded' : 'btn-floating')}
+                  onClick={(e) => convertVideotoBlog(_id, index)}
+                ><i className={"fa-solid fa-gear " + (selBlog === index ? 'fa-spin' : '')}></i>
+                  {selBlog === index ? ' Converting ...' : ''}
+                </button>
+              ) : (
+                <button className="btn btn-success" disabled>
+                  Converting...
+                </button>
+              )}
             </div>
-          
+
+            <p className="h5 ms-3">{filename}</p>
+            {/* <p className="h6 text-muted ms-3">{file}</p> */}
+          </div>
+
         </div>
       ));
     } else {
@@ -130,7 +144,7 @@ const Managevideos = () => {
   };
 
   const saveVideo = async (file) => {
-    const res = await fetch('http://localhost:5000/user/add', {
+    const res = await fetch('http://localhost:5000/video/add', {
       method: 'POST',
       body: JSON.stringify({
         filename: file.name,
@@ -153,6 +167,7 @@ const Managevideos = () => {
         title: 'Nice',
         text: 'User Registered sucessfully'
       });
+      getDataFromBackend();
 
     } else {
       Swal.fire({
@@ -176,21 +191,26 @@ const Managevideos = () => {
     }
   }
 
-  
+
 
   return (
     <div>
       <h2>Manage Videos</h2>
       <hr />
 
-      <div className='card'>
-        <div className="card-body">
-          <input type='file' onChange={uploadVideo} />
-        </div>
-      </div>
+
 
       <div className="container">
-        {displayVideo()}
+        <div className='card'>
+          <div className="card-body">
+            <label htmlFor='video' className='btn btn-success'>Upload Here</label>
+            <input hidden type='file' id="video" onChange={uploadVideo} />
+          </div>
+        </div>
+        <hr />
+        <div className='row'>
+          {displayVideo()}
+        </div>
       </div>
 
 

@@ -5,7 +5,7 @@ const port = 5000;
 const userRouter = require('./routers/userRouter');
 const videoRouter = require('./routers/videoRouter');
 const utilRouter = require('./routers/util');
-const blogRouter = require('./routers/blogRouter');
+const blogRouter = require('./routers/blogRouter'); 
 
 const cors=require('cors');
 app.use(cors({
